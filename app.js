@@ -1,5 +1,5 @@
-const APP_VERSION='0.3';
-const PATCH_NOTES={version:'0.3',date:'19.08.2026',title:'Beta 0.3',notes:['Patchnotes werden nach jedem neuen Update automatisch angezeigt.','Die App prüft beim Start und beim Zurückkehren in den Vordergrund auf neue Versionen.','Bei einem neuen Stand lädt die App automatisch die aktuellste Version.','Gespeicherte Grundstücke bleiben bei Updates erhalten.']};
+const APP_VERSION='0.4';
+const PATCH_NOTES={version:'0.4',date:'19.08.2026',title:'Beta 0.4 – Probelauf',notes:['Probelauf des automatischen Update-Systems gestartet.','Wenn du diese Patchnotes auf dem Handy siehst, hat die automatische Aktualisierung funktioniert.','Alle gespeicherten Grundstücksdaten bleiben unverändert erhalten.']};
 const PILOT_REGIONS=['Basel-Stadt','Basel-Landschaft','Aargau','Solothurn'];
 const state={items:JSON.parse(localStorage.getItem('structaScoutItems')||'[]')};
 const fmt=n=>new Intl.NumberFormat('de-CH',{style:'currency',currency:'CHF',maximumFractionDigits:0}).format(n);
