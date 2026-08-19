@@ -7,8 +7,8 @@
   <meta name="description" content="STRUCTA Grundstücks-Scout – Grundstücke finden, erfassen und wirtschaftlich bewerten.">
   <title>STRUCTA Grundstücks-Scout</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=0.6">
-  <link rel="stylesheet" href="search.css?v=0.6">
+  <link rel="stylesheet" href="styles.css?v=0.7">
+  <link rel="stylesheet" href="search.css?v=0.7">
 </head>
 <body>
   <div id="updateStatus" class="update-status" hidden>Neue Version wird geladen …</div>
@@ -26,7 +26,7 @@
         <button class="nav-item"><span>☆</span>Favoriten</button>
       </nav>
       <div class="sidebar-footer">
-        <div class="online"><i></i> <span id="appVersion">Beta 0.6</span></div>
+        <div class="online"><i></i> <span id="appVersion">Beta 0.7</span></div>
         <small>STRUCTA · Projektentwicklung</small>
       </div>
     </aside>
@@ -73,10 +73,10 @@
         <div class="panel-title search-title">
           <div>
             <span class="kicker">AKQUISE-SUCHE</span>
-            <h3>Über alle Quellen suchen</h3>
-            <p>Web, Facebook, Tutti, Comparis, ImmoScout24, Homegate, Newhome sowie Makler- und Projektentwicklerseiten.</p>
+            <h3>Grundstückssuche</h3>
+            <p>Ein Suchlauf berücksichtigt immer Web, Facebook, Tutti, Comparis, ImmoScout24, Homegate, Newhome sowie Makler- und Projektentwicklerseiten.</p>
           </div>
-          <span class="source-count">8+ Quellen</span>
+          <span class="source-count">8 Suchbereiche</span>
         </div>
         <div class="search-query-row">
           <label><span>Zusätzliche Suchbegriffe</span><input id="searchKeywords" value="Bauland Grundstück Entwicklungsobjekt Abbruchobjekt Baulandreserve" autocomplete="off"></label>
@@ -84,7 +84,7 @@
         </div>
         <div id="searchStatus" class="search-status" hidden></div>
         <div id="sourceGrid" class="source-grid"></div>
-        <div class="search-hint"><strong>So funktioniert es:</strong> „Suche starten“ öffnet eine breite Gesamtsuche. Darunter kannst du jede Quelle zusätzlich einzeln kontrollieren. Damit blockiert das iPhone keine acht gleichzeitig geöffneten Fenster.</div>
+        <div class="search-hint"><strong>Wichtig:</strong> Die App bleibt beim Start des Suchlaufs geöffnet. Externe Portale öffnen sich nur, wenn du einen Suchbereich bewusst auswählst.</div>
       </section>
 
       <section class="kpis">
@@ -144,7 +144,7 @@
     </div>
   </dialog>
 
-  <script src="updater.js?v=0.6"></script>
-  <script src="app.js?v=0.6"></script>
+  <script src="updater.js?v=0.7"></script>
+  <script src="app.js?v=0.7"></script>
 </body>
 </html>
