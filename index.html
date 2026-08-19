@@ -7,9 +7,9 @@
   <meta name="description" content="STRUCTA Grundstücks-Scout – Akquisition, Standortcheck, Markt- und Wirtschaftlichkeitsprüfung.">
   <title>STRUCTA Grundstücks-Scout</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=0.12">
-  <link rel="stylesheet" href="search.css?v=0.12">
-  <link rel="stylesheet" href="analysis.css?v=0.12">
+  <link rel="stylesheet" href="styles.css?v=0.16">
+  <link rel="stylesheet" href="search.css?v=0.16">
+  <link rel="stylesheet" href="analysis.css?v=0.16">
 </head>
 <body>
 <div id="updateStatus" class="update-status" hidden>Neue Version wird geladen …</div>
@@ -19,7 +19,7 @@
       <div class="brand"><div class="brand-symbol"><span></span><span></span><span></span></div><div><strong>STRUCTA</strong><small>Grundstücks-Scout</small></div></div>
       <nav class="nav"><button class="nav-item active"><span>⌂</span>Investment Radar</button><button class="nav-item"><span>⌕</span>Akquisition</button><button class="nav-item"><span>◫</span>Wirtschaftlichkeit</button><button class="nav-item"><span>☆</span>Favoriten</button></nav>
     </div>
-    <div class="sidebar-footer"><div class="online"><i></i><span id="appVersion">Beta 0.12</span></div><small>0 CHF laufende Softwarekosten · Privatpilot</small></div>
+    <div class="sidebar-footer"><div class="online"><i></i><span id="appVersion">Beta 0.16</span></div><small>0 CHF laufende Softwarekosten · Privatpilot</small></div>
   </aside>
   <main>
     <header class="topbar">
@@ -51,9 +51,9 @@
     </section>
 
     <section class="kpis">
-      <article><span>Geprüfte Chancen</span><strong id="countKpi">0</strong><small>im aktuellen Filter</small></article>
-      <article><span>Ø Projektmarge</span><strong id="marginKpi">offen</strong><small>analysierte Projekte</small></article>
-      <article><span>Ø Gewinnpotenzial</span><strong id="profitKpi">offen</strong><small>analysierte Projekte</small></article>
+      <article><span>Geprüfte Chancen</span><strong id="countKpi">0</strong><small>gespeicherte Pipeline</small></article>
+      <article><span>Ø Projektmarge</span><strong id="marginKpi">offen</strong><small>aktive Projekte</small></article>
+      <article><span>Ø Gewinnpotenzial</span><strong id="profitKpi">offen</strong><small>aktive Projekte</small></article>
       <article class="blue"><span>Beste Bewertung</span><strong id="scoreKpi">–</strong><small>Investment Score</small></article>
     </section>
 
@@ -101,8 +101,9 @@
 </form></dialog>
 
 <dialog id="patchDialog" class="patch-dialog"><div class="patch-wrap"><div class="patch-hero"><div class="patch-icon">✓</div><div><span class="kicker patch-kicker">NEUE VERSION</span><h3 id="patchTitle">Was ist neu?</h3><p id="patchDate"></p></div></div><div id="patchNotes" class="patch-notes"></div><div class="patch-footer"><small>Gespeicherte Opportunities bleiben bei Updates erhalten.</small><button type="button" class="btn primary" id="patchCloseBtn">Verstanden</button></div></div></dialog>
-<script src="updater.js?v=0.12"></script>
-<script src="app.js?v=0.12"></script>
-<script src="location.js?v=0.12"></script>
+<script src="updater.js?v=0.16"></script>
+<script src="app.js?v=0.16"></script>
+<script src="location.js?v=0.16"></script>
+<script src="pipeline.js?v=0.16" data-pipeline-v2="1"></script>
 </body>
 </html>
