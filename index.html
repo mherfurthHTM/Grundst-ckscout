@@ -7,9 +7,9 @@
   <meta name="description" content="STRUCTA Grundstücks-Scout – Akquisition, Marktcheck und Wirtschaftlichkeitsprüfung.">
   <title>STRUCTA Grundstücks-Scout</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=0.10">
-  <link rel="stylesheet" href="search.css?v=0.10">
-  <link rel="stylesheet" href="analysis.css?v=0.10">
+  <link rel="stylesheet" href="styles.css?v=0.11">
+  <link rel="stylesheet" href="search.css?v=0.11">
+  <link rel="stylesheet" href="analysis.css?v=0.11">
 </head>
 <body>
 <div id="updateStatus" class="update-status" hidden>Neue Version wird geladen …</div>
@@ -19,7 +19,7 @@
       <div class="brand"><div class="brand-symbol"><span></span><span></span><span></span></div><div><strong>STRUCTA</strong><small>Grundstücks-Scout</small></div></div>
       <nav class="nav"><button class="nav-item active"><span>⌂</span>Investment Radar</button><button class="nav-item"><span>⌕</span>Akquisition</button><button class="nav-item"><span>◫</span>Wirtschaftlichkeit</button><button class="nav-item"><span>☆</span>Favoriten</button></nav>
     </div>
-    <div class="sidebar-footer"><div class="online"><i></i><span id="appVersion">Beta 0.10</span></div><small>0 CHF laufende Softwarekosten · Privatpilot</small></div>
+    <div class="sidebar-footer"><div class="online"><i></i><span id="appVersion">Beta 0.11</span></div><small>0 CHF laufende Softwarekosten · Privatpilot</small></div>
   </aside>
   <main>
     <header class="topbar">
@@ -28,7 +28,7 @@
     </header>
 
     <section class="hero">
-      <div><span class="badge">STRUCTA INVESTMENT RADAR · PILOTREGIONEN</span><h2>Vom Grundstück zum belastbaren Vorentscheid.</h2><p>Der Scout verbindet Akquise, Marktannahmen, Baupotenzial, Projektkosten, Sonderrisiken und Erlös in einem transparenten Investment-Check.</p></div>
+      <div><span class="badge">STRUCTA INVESTMENT RADAR · PILOTREGIONEN</span><h2>Vom Grundstück zum belastbaren Vorentscheid.</h2><p>Der Scout verbindet Akquise, Marktannahmen, Baupotenzial, Projektkosten, automatische Risikoreserven und Erlös in einem transparenten Investment-Check.</p></div>
       <div class="hero-score"><span>Beste Opportunity</span><strong id="topScore">–</strong><small>von 100 Punkten</small></div>
     </section>
 
@@ -43,7 +43,7 @@
     </section>
 
     <section id="searchCenter" class="panel search-center">
-      <div class="panel-title search-title"><div><span class="kicker">LIVE-AKQUISE</span><h3>Marktstand & kostenlose Suche</h3><p>Gefundene Objekte können direkt mit „Jetzt prüfen“ in die Wirtschaftlichkeits- und Risikoprüfung übernommen werden.</p></div><span class="source-count">8+ Bereiche</span></div>
+      <div class="panel-title search-title"><div><span class="kicker">LIVE-AKQUISE</span><h3>Marktstand & kostenlose Suche</h3><p>Gefundene Objekte können direkt mit „Jetzt prüfen“ in die automatische Grobkosten-, Wirtschaftlichkeits- und Risikoprüfung übernommen werden.</p></div><span class="source-count">8+ Bereiche</span></div>
       <div class="search-query-row"><label><span>Suchbegriffe</span><input id="searchKeywords" value="Bauland Grundstück Entwicklungsobjekt Abbruchobjekt Baulandreserve" autocomplete="off"></label><button id="startSearchBtn" class="btn primary search-start" type="button">⌕ Suche starten</button></div>
       <div id="searchStatus" class="search-status" hidden></div>
       <div id="liveResults" class="live-results"></div>
@@ -59,7 +59,7 @@
 
     <section class="workspace">
       <div class="panel opportunities"><div class="panel-title"><div><span class="kicker">INVESTMENT PIPELINE</span><h3>Geprüfte Opportunities</h3></div><select id="sortFilter" class="sort"><option value="score">Score ↓</option><option value="margin">Marge ↓</option><option value="profit">Gewinn ↓</option><option value="price">Kaufpreis ↑</option></select></div><div id="list" class="list"></div></div>
-      <aside class="panel model"><div class="panel-title"><div><span class="kicker">ENTSCHEIDUNGSMODELL</span><h3>Investment Score</h3></div></div><div class="weights"><div><p><strong>Wirtschaftlichkeit</strong><small>Marge, Gewinn, Residualwert</small></p><b>35 %</b></div><div><p><strong>Markt</strong><small>Puffer zum Break-even</small></p><b>25 %</b></div><div><p><strong>Baurecht</strong><small>Entwicklungspotenzial</small></p><b>15 %</b></div><div><p><strong>Architektur</strong><small>Qualitätspotenzial</small></p><b>10 %</b></div><div><p><strong>Risiko</strong><small>Planungs-/Projektrisiko</small></p><b>15 %</b></div></div><div class="roadmap"><strong>Kostensicherheit</strong><p>Eine grobe oder vertiefte Kostenschätzung kann maximal „VERTIEFEN“ ergeben. „KAUFEN“ wird erst freigegeben, wenn die Kostengrundlage als belastbar eingestuft ist.</p></div></aside>
+      <aside class="panel model"><div class="panel-title"><div><span class="kicker">ENTSCHEIDUNGSMODELL</span><h3>Investment Score</h3></div></div><div class="weights"><div><p><strong>Wirtschaftlichkeit</strong><small>Marge, Gewinn, Residualwert</small></p><b>35 %</b></div><div><p><strong>Markt</strong><small>Puffer zum Break-even</small></p><b>25 %</b></div><div><p><strong>Baurecht</strong><small>Entwicklungspotenzial</small></p><b>15 %</b></div><div><p><strong>Architektur</strong><small>Qualitätspotenzial</small></p><b>10 %</b></div><div><p><strong>Risiko</strong><small>Planungs-/Projektrisiko</small></p><b>15 %</b></div></div><div class="roadmap"><strong>Erst prüfen, dann Zeit investieren</strong><p>Der Scout setzt für die Frühphase automatische Grobkostenreserven. Erst attraktive Objekte werden anschliessend vertieft. „KAUFEN“ bleibt belastbaren Projektannahmen vorbehalten.</p></div></aside>
     </section>
   </main>
 </div>
@@ -76,29 +76,52 @@
     <label><span>Bruttogeschossfläche m²</span><input id="gfa" type="number" min="1" value="1800" required></label><label><span>Verkaufbare Fläche m²</span><input id="sellable" type="number" min="1" value="1450" required></label>
   </div></div>
 
-  <div class="form-section"><h4>2 · Markt- und Standardkosten</h4><p class="section-note">Frühe Projektannahmen. Marktwert und Kostenkennwerte müssen im Projektverlauf verifiziert werden.</p><div class="form-grid">
+  <div class="form-section"><h4>2 · Markt- und Standardkosten</h4><p class="section-note">Beim Web-Fund setzt der Scout eine grobe kantonale Marktannahme und Startwerte. Diese dienen nur dem Screening.</p><div class="form-grid">
     <label><span>Marktannahme Verkauf CHF/m²</span><input id="saleM2" type="number" min="1" step="50" value="8200" required></label><label><span>Baukosten CHF/m² BGF</span><input id="buildM2" type="number" min="1" step="50" value="3600" required></label>
     <label><span>Planung/Nebenkosten % Bau</span><input id="softPct" type="number" min="0" max="60" step="0.5" value="18" required></label><label><span>Reserve % Bau</span><input id="reservePct" type="number" min="0" max="40" step="0.5" value="7" required></label>
     <label><span>Kaufnebenkosten % Land</span><input id="acqPct" type="number" min="0" max="20" step="0.5" value="3" required></label><label><span>Zielmarge auf Kosten %</span><input id="targetMargin" type="number" min="0" max="50" step="1" value="15" required></label>
   </div></div>
 
-  <div class="form-section"><h4>3 · Objektspezifische Sonderkosten</h4><p class="section-note">0 CHF bedeutet: noch nicht berücksichtigt oder nicht erforderlich. Bei Bestandsobjekten und schwierigen Grundstücken bewusst prüfen.</p><div class="form-grid four">
-    <label><span>Abbruch CHF</span><input id="demolition" type="number" min="0" step="5000" value="0"></label>
-    <label><span>Schadstoffe / Asbest CHF</span><input id="hazard" type="number" min="0" step="5000" value="0"></label>
-    <label><span>Altlasten CHF</span><input id="contamination" type="number" min="0" step="5000" value="0"></label>
-    <label><span>Baugrund / Pfählung CHF</span><input id="ground" type="number" min="0" step="5000" value="0"></label>
-    <label><span>Baugrube / Grundwasser CHF</span><input id="excavation" type="number" min="0" step="5000" value="0"></label>
-    <label><span>Ertüchtigungen Bestand CHF</span><input id="retrofit" type="number" min="0" step="5000" value="0"></label>
-    <label><span>Erschliessung / Werkleitungen CHF</span><input id="utilities" type="number" min="0" step="5000" value="0"></label>
-    <label><span>Aussenanlagen / Stützungen CHF</span><input id="externalWorks" type="number" min="0" step="5000" value="0"></label>
-    <label><span>Finanzierung CHF</span><input id="finance" type="number" min="0" step="5000" value="0"></label>
-    <label><span>Vermarktung / Verkauf CHF</span><input id="marketing" type="number" min="0" step="5000" value="0"></label>
-    <label><span>Weitere Sonderkosten CHF</span><input id="otherSpecial" type="number" min="0" step="5000" value="0"></label>
-  </div></div>
+  <div class="form-section">
+    <div class="section-title-row"><div><h4>3 · Objektspezifische Sonderkosten</h4><p class="section-note">Für die Erstprüfung automatisch aus Inseratshinweisen und Schweizer Erfahrungswerten geschätzt.</p></div>
+      <label class="compact-select"><span>Modus</span><select id="specialMode"><option value="auto" selected>Automatisch schätzen</option><option value="manual">Manuell</option></select></label>
+    </div>
+
+    <div class="benchmark-note">
+      <strong>Scout-Grobkosten-Automatik</strong>
+      <span>Abbruch grob CHF 170–250/m² · Aushub grob CHF 15–55/m³ · einfache Erschliessung grob CHF 20’000–45’000 · Vermarktung 2–4 % vom Verkaufspreis.</span>
+      <small>Frühphasen-Benchmarks aus öffentlich zugänglichen Schweizer Richtwerten. Keine Offerte und kein Ersatz für Baugrund-/Schadstoffabklärungen.</small>
+    </div>
+
+    <div class="risk-flags">
+      <label><input type="checkbox" id="flagExisting"><span>Bestand / Abbruch</span></label>
+      <label><input type="checkbox" id="flagHazard"><span>Schadstoffrisiko / Altbau</span></label>
+      <label><input type="checkbox" id="flagSlope"><span>Hang / schwierige Baugrube</span></label>
+      <label><input type="checkbox" id="flagDevelopment"><span>Erschliessung / Baureife offen</span></label>
+      <label><input type="checkbox" id="flagWater"><span>Grund-/Hochwasser</span></label>
+      <label><input type="checkbox" id="flagContamination"><span>Altlastenverdacht</span></label>
+    </div>
+
+    <div class="auto-actions"><button type="button" class="btn secondary" id="autoEstimateBtn">Grobkosten neu berechnen</button><small>Im Automatikmodus aktualisieren sich die Reserven bei Änderungen von BGF, Fläche oder Erlös selbst.</small></div>
+
+    <details class="manual-costs"><summary>Grobkosten ansehen / manuell anpassen</summary><div class="form-grid four manual-grid">
+      <label><span>Abbruch CHF</span><input id="demolition" type="number" min="0" step="5000" value="0"></label>
+      <label><span>Schadstoffe / Asbest CHF</span><input id="hazard" type="number" min="0" step="5000" value="0"></label>
+      <label><span>Altlasten CHF</span><input id="contamination" type="number" min="0" step="5000" value="0"></label>
+      <label><span>Baugrund / Pfählung CHF</span><input id="ground" type="number" min="0" step="5000" value="0"></label>
+      <label><span>Baugrube / Grundwasser CHF</span><input id="excavation" type="number" min="0" step="5000" value="0"></label>
+      <label><span>Ertüchtigungen Bestand CHF</span><input id="retrofit" type="number" min="0" step="5000" value="0"></label>
+      <label><span>Erschliessung / Werkleitungen CHF</span><input id="utilities" type="number" min="0" step="5000" value="0"></label>
+      <label><span>Aussenanlagen / Stützungen CHF</span><input id="externalWorks" type="number" min="0" step="5000" value="0"></label>
+      <label><span>Finanzierung CHF</span><input id="finance" type="number" min="0" step="5000" value="0"></label>
+      <label><span>Vermarktung / Verkauf CHF</span><input id="marketing" type="number" min="0" step="5000" value="0"></label>
+      <label><span>Weitere Sonderkosten CHF</span><input id="otherSpecial" type="number" min="0" step="5000" value="0"></label>
+    </div></details>
+  </div>
 
   <div class="form-section"><h4>4 · Kostensicherheit & qualitative Bewertung</h4><div class="form-grid">
     <label><span>Kostengrundlage</span><select id="costBasis"><option value="rough" selected>Grobe Vorprüfung</option><option value="detailed">Vertiefte Vorprüfung</option><option value="verified">Belastbare Projektannahmen</option></select></label>
-    <label class="wide"><span>Quellen / Bemerkungen zur Kostengrundlage</span><textarea id="costSource" rows="2" placeholder="z. B. Baukosten interner Kennwert, Abbruch Richtofferte, Marktwert Vergleichsobjekte …"></textarea></label>
+    <label class="wide"><span>Quellen / Bemerkungen zur Kostengrundlage</span><textarea id="costSource" rows="3" placeholder="Der Scout dokumentiert die verwendeten Grobkosten automatisch."></textarea></label>
   </div><div class="form-grid four qualitative-grid">
     <label><span>Lage & Markt</span><select id="location"><option value="95">Sehr stark</option><option value="82" selected>Stark</option><option value="68">Solide</option><option value="52">Durchschnittlich</option><option value="35">Schwach</option></select></label>
     <label><span>Baurecht</span><select id="planning"><option value="95">Sehr hoch</option><option value="82" selected>Hoch</option><option value="68">Solide</option><option value="52">Eingeschränkt</option><option value="35">Kritisch</option></select></label>
@@ -111,5 +134,5 @@
 </form></dialog>
 
 <dialog id="patchDialog" class="patch-dialog"><div class="patch-wrap"><div class="patch-hero"><div class="patch-icon">✓</div><div><span class="kicker patch-kicker">NEUE VERSION</span><h3 id="patchTitle">Was ist neu?</h3><p id="patchDate"></p></div></div><div id="patchNotes" class="patch-notes"></div><div class="patch-footer"><small>Gespeicherte Opportunities bleiben bei Updates erhalten.</small><button type="button" class="btn primary" id="patchCloseBtn">Verstanden</button></div></div></dialog>
-<script src="updater.js?v=0.10"></script><script src="app.js?v=0.10"></script>
+<script src="updater.js?v=0.11"></script><script src="app.js?v=0.11"></script>
 </body></html>
