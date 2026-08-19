@@ -1,4 +1,4 @@
-const LOCAL_VERSION='0.5';
+const LOCAL_VERSION='0.6';
 let updateInProgress=false;
 async function forceLatestVersion(){if(updateInProgress)return;updateInProgress=true;try{const regs=('serviceWorker'in navigator)?await navigator.serviceWorker.getRegistrations():[];await Promise.all(regs.map(r=>r.update().catch(()=>{})));if('caches'in window){const keys=await caches.keys();await Promise.all(keys.filter(k=>k.startsWith('structa-scout-')).map(k=>caches.delete(k)))}sessionStorage.setItem('structaScoutForcedVersion',LOCAL_VERSION);const u=new URL(location.href);u.searchParams.set('v',LOCAL_VERSION);location.replace(u.toString());}catch(e){console.warn('Update konnte nicht erzwungen werden',e);updateInProgress=false}}
 async function checkRemoteVersion(){try{const r=await fetch('./version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const data=await r.json();if(data.version&&data.version!==LOCAL_VERSION){const el=document.getElementById('updateStatus');if(el)el.hidden=false;await forceLatestVersion();}}catch(e){console.warn('Versionsprüfung nicht verfügbar',e)}}
