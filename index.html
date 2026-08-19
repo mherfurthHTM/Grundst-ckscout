@@ -7,9 +7,11 @@
   <meta name="description" content="STRUCTA Grundstücks-Scout – Grundstücke erfassen, wirtschaftlich bewerten und priorisieren.">
   <title>STRUCTA Grundstücks-Scout</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=0.3">
 </head>
 <body>
+  <div id="updateStatus" class="update-status" hidden>Neue Version wird geladen …</div>
+
   <div class="app-shell">
     <aside class="sidebar">
       <div class="brand">
@@ -25,7 +27,7 @@
       </nav>
 
       <div class="sidebar-footer">
-        <div class="online"><i></i> Beta 0.2</div>
+        <div class="online"><i></i> <span id="appVersion">Beta 0.3</span></div>
         <small>STRUCTA · Projektentwicklung</small>
       </div>
     </aside>
@@ -120,6 +122,24 @@
     </form>
   </dialog>
 
-  <script src="app.js"></script>
+  <dialog id="patchDialog" class="patch-dialog">
+    <div class="patch-wrap">
+      <div class="patch-hero">
+        <div class="patch-icon">✓</div>
+        <div>
+          <span class="kicker patch-kicker">NEUE VERSION</span>
+          <h3 id="patchTitle">Was ist neu?</h3>
+          <p id="patchDate"></p>
+        </div>
+      </div>
+      <div id="patchNotes" class="patch-notes"></div>
+      <div class="patch-footer">
+        <small>Deine gespeicherten Grundstücke bleiben bei Updates erhalten.</small>
+        <button type="button" class="btn primary" id="patchCloseBtn">Verstanden</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js?v=0.3"></script>
 </body>
 </html>
