@@ -25,7 +25,7 @@
       </nav>
 
       <div class="sidebar-footer">
-        <div class="online"><i></i> Beta 0.1</div>
+        <div class="online"><i></i> Beta 0.2</div>
         <small>STRUCTA · Projektentwicklung</small>
       </div>
     </aside>
@@ -38,19 +38,19 @@
           <p class="intro">Chancen finden, rechnen und nach wirtschaftlichem Potenzial priorisieren.</p>
         </div>
         <div class="top-actions">
-          <button class="btn secondary" id="demoBtn">Demo laden</button>
+          <button class="btn secondary" id="demoBtn">Web-Test laden</button>
           <button class="btn primary" id="addBtn">+ Grundstück erfassen</button>
         </div>
       </header>
 
       <section class="hero">
         <div>
-          <span class="badge">STRUCTA INVESTMENT RADAR</span>
+          <span class="badge">STRUCTA INVESTMENT RADAR · PILOTREGIONEN</span>
           <h2>Gute Architektur beginnt mit einem guten Grundstück.</h2>
           <p>Der Scout verbindet Wirtschaftlichkeit und Projektqualität: Kaufpreis, Baukosten, Erlös, Marge, Lage, Baurecht und Risiko in einer gemeinsamen Bewertung.</p>
         </div>
         <div class="hero-score">
-          <span>Beste Opportunity</span>
+          <span>Beste analysierte Opportunity</span>
           <strong id="topScore">–</strong>
           <small>von 100 Punkten</small>
         </div>
@@ -62,26 +62,27 @@
           <button class="text-btn" id="resetBtn">Zurücksetzen</button>
         </div>
         <div class="filter-grid">
-          <label><span>Region</span><select id="regionFilter"><option value="all">Alle Regionen</option><option>Basel-Stadt</option><option>Basel-Landschaft</option><option>Aargau</option><option>Solothurn</option></select></label>
+          <label><span>Region</span><select id="regionFilter"><option value="all">Alle Pilotregionen</option><option>Basel-Stadt</option><option>Basel-Landschaft</option><option>Aargau</option><option>Solothurn</option></select></label>
           <label><span>Investitionsbudget</span><select id="budgetFilter"><option value="999">Kein Limit</option><option value="0.5">bis CHF 0.5 Mio.</option><option value="1">bis CHF 1 Mio.</option><option value="1.5">bis CHF 1.5 Mio.</option><option value="2">bis CHF 2 Mio.</option><option value="2.5">bis CHF 2.5 Mio.</option><option value="3">bis CHF 3 Mio.</option><option value="4">bis CHF 4 Mio.</option><option value="5">bis CHF 5 Mio.</option><option value="7.5">bis CHF 7.5 Mio.</option><option value="10">bis CHF 10 Mio.</option><option value="15">bis CHF 15 Mio.</option><option value="20">bis CHF 20 Mio.</option><option value="30">bis CHF 30 Mio.</option></select></label>
-          <label><span>Projektart</span><select id="strategyFilter"><option value="all">Alle Projektarten</option><option>Mehrfamilienhaus</option><option>Wohnüberbauung</option><option>Mischnutzung</option><option>Gewerbe</option></select></label>
+          <label><span>Projektart</span><select id="strategyFilter"><option value="all">Alle Projektarten</option><option>Offen / Vorprüfung</option><option>Mehrfamilienhaus</option><option>Wohnüberbauung</option><option>Mischnutzung</option><option>Gewerbe</option></select></label>
           <label><span>Mindestmarge</span><select id="marginFilter"><option value="0">Keine Mindestmarge</option><option value="5">ab 5 %</option><option value="10">ab 10 %</option><option value="15">ab 15 %</option><option value="20">ab 20 %</option><option value="25">ab 25 %</option></select></label>
         </div>
       </section>
 
       <section class="kpis">
         <article><span>Passende Chancen</span><strong id="countKpi">0</strong><small>im aktuellen Filter</small></article>
-        <article><span>Ø Projektmarge</span><strong id="marginKpi">0.0 %</strong><small>auf Gesamtinvestition</small></article>
-        <article><span>Ø Gewinnpotenzial</span><strong id="profitKpi">CHF 0</strong><small>vor Finanzierung & Steuern</small></article>
+        <article><span>Ø Projektmarge</span><strong id="marginKpi">offen</strong><small>nur analysierte Projekte</small></article>
+        <article><span>Ø Gewinnpotenzial</span><strong id="profitKpi">offen</strong><small>nur analysierte Projekte</small></article>
         <article class="blue"><span>Beste Bewertung</span><strong id="scoreKpi">–</strong><small>Opportunity Score</small></article>
       </section>
 
       <section class="workspace">
         <div class="panel opportunities">
           <div class="panel-title">
-            <div><span class="kicker">RANKING</span><h3>Grundstücke</h3></div>
+            <div><span class="kicker">SCOUT-LISTE</span><h3>Grundstücke</h3></div>
             <select id="sortFilter" class="sort"><option value="score">Score ↓</option><option value="margin">Marge ↓</option><option value="profit">Gewinn ↓</option><option value="price">Kaufpreis ↑</option></select>
           </div>
+          <div class="web-note">Web-Funde enthalten nur öffentlich sichtbare Eckdaten und einen Link zur Originalquelle. Wirtschaftlichkeit wird erst nach der Projekt-Vorprüfung berechnet.</div>
           <div id="list" class="list"></div>
         </div>
 
@@ -93,7 +94,7 @@
             <div><p><strong>Baurecht & Potenzial</strong><small>Nutzbarkeit und Entwicklung</small></p><b>20 %</b></div>
             <div><p><strong>Risiko</strong><small>Planungs- und Projektrisiko</small></p><b>15 %</b></div>
           </div>
-          <div class="roadmap"><strong>Nächster Schritt</strong><p>Automatische Internetsuche, Marktvergleich, Preis/m², Standortdaten und KI-Kurzbeurteilung werden als nächste Ausbaustufe ergänzt.</p></div>
+          <div class="roadmap"><strong>Pilotbetrieb</strong><p>Basel-Stadt, Basel-Landschaft, Aargau und Solothurn. Reale Web-Funde werden zuerst als Vorprüfung erfasst. Danach ergänzen wir Baupotenzial, Marktwerte und die vollständige Wirtschaftlichkeitsrechnung.</p></div>
         </aside>
       </section>
     </main>
