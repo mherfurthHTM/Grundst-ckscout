@@ -1,4 +1,4 @@
-const CACHE='structa-scout-v0.6';
+const CACHE='structa-scout-v0.7';
 const ASSETS=['./','./index.html','./styles.css?v=0.6','./search.css?v=0.6','./updater.js?v=0.6','./app.js?v=0.6','./manifest.webmanifest','./version.json'];
 self.addEventListener('install',event=>{self.skipWaiting();event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
