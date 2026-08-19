@@ -1,13 +1,14 @@
-const LOCAL_VERSION='0.14';
-const RELEASE_ID='0.14-r1';
+const LOCAL_VERSION='0.15';
+const RELEASE_ID='0.15-r1';
 const RELEASE_NOTES={
-  title:'Beta 0.14 – Management-Dashboard',
+  title:'Beta 0.15 – Opportunity-Pipeline repariert',
   date:'19.08.2026',
   notes:[
-    'Die vier Management-Kennzahlen sind auf dem Handy jetzt als kompakte 2×2-Übersicht angeordnet.',
-    'Geprüfte Chancen, Projektmarge, Gewinnpotenzial und beste Bewertung sind jetzt anklickbar.',
-    'Ein Tipp auf eine Kennzahl führt direkt zur Investment-Pipeline und sortiert bei Marge, Gewinn oder Score passend.',
-    'Die blaue Karte „Beste Bewertung“ bleibt als wichtigste Management-Kennzahl hervorgehoben.',
+    'Geprüfte Opportunities erscheinen nach „Bewerten & speichern“ zuverlässig in der Pipeline.',
+    'Ein Web-Fund übernimmt jetzt die im Suchprofil gewählte Projektart, statt immer „Offen / Vorprüfung“ zu verwenden.',
+    'Filter, die ein frisch gespeichertes Objekt ausblenden würden, werden beim Speichern automatisch angepasst.',
+    'Nach erfolgreichem Speichern erscheint eine klare Bestätigung und die App springt zur Investment-Pipeline.',
+    'Das kompakte 2×2-Management-Dashboard auf dem Handy bleibt aktiv.',
     'Die stabilisierte Standortprüfung aus Beta 0.13 bleibt vollständig erhalten.',
     '0 CHF laufende Softwarekosten, sichtbare Version, Patchnotes und Pull-to-Refresh bleiben bestehen.'
   ]
@@ -63,7 +64,7 @@ function renderVerifiedResults(data){
   const t=document.getElementById('liveResults'),s=document.getElementById('searchStatus');if(!t||!s)return;const items=verifiedFilter(data.items||[]);window.__structaVerifiedItems=items;
   if(!items.length){t.innerHTML='';s.hidden=false;s.innerHTML=`<strong>Keine Angebote im aktuellen Filter.</strong> Stand ${safe(data.updated||'')}.`;return;}
   t.innerHTML=items.map((x,i)=>{const ppm=x.area&&x.price?Math.round(x.price/x.area):null;return `<article class="live-card verified-live-card"><span class="verified-badge">✓ VERIFIZIERTER WEB-FUND</span><h4>${safe(x.title)}</h4><p class="verified-address">${safe(x.address)} · ${safe(x.region)}</p><div class="verified-metrics"><span>Kaufpreis <strong>${x.price?chf(x.price):'auf Anfrage'}</strong></span><span>Grundstück <strong>${intFmt(x.area)} m²</strong></span>${ppm?`<span>Landpreis <strong>${chf(ppm)}/m²</strong></span>`:''}${x.zone?`<span>Zone <strong>${safe(x.zone)}</strong></span>`:''}</div><p class="verified-note">${safe(x.note||'')}</p><div class="live-meta"><span class="verified-source">Quelle: ${safe(x.source)}</span><div class="market-actions"><a href="${x.url}" target="_blank" rel="noopener noreferrer">Originalquelle ↗</a><button type="button" class="btn primary market-check-btn" data-market-index="${i}">Jetzt prüfen</button></div></div></article>`;}).join('');
-  s.hidden=false;s.innerHTML=`<strong>${items.length} passende Marktangebote.</strong> „Jetzt prüfen“ startet Grobkosten, Wirtschaftlichkeit und die stabilisierte Standortprüfung.`;
+  s.hidden=false;s.innerHTML=`<strong>${items.length} passende Marktangebote.</strong> „Jetzt prüfen“ startet Grobkosten, Wirtschaftlichkeit und Standortprüfung.`;
 }
 async function runVerifiedMarketSearch(e){if(e){e.preventDefault();e.stopImmediatePropagation();}const s=document.getElementById('searchStatus'),t=document.getElementById('liveResults');if(s){s.hidden=false;s.innerHTML='<strong>Markt wird geprüft …</strong>';}if(t)t.innerHTML='';try{const r=await fetch('./market-data.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error();renderVerifiedResults(await r.json());if(typeof buildFallbacks==='function')buildFallbacks();}catch{if(s)s.innerHTML='<strong>Marktstand konnte gerade nicht geladen werden.</strong> Bitte aktualisieren oder direkte Suchbereiche nutzen.';}}
 function installMarketHandlers(){
@@ -76,7 +77,11 @@ function installKpiDashboard(){
   const defs=[['countKpi',null,'Geprüfte Opportunities anzeigen'],['marginKpi','margin','Nach Projektmarge sortieren'],['profitKpi','profit','Nach Gewinnpotenzial sortieren'],['scoreKpi','score','Beste Bewertung anzeigen']];
   defs.forEach(([id,sortValue,label])=>{const value=document.getElementById(id),card=value?.closest('article');if(!card||card.dataset.kpiBound==='1')return;card.dataset.kpiBound='1';card.classList.add('kpi-action');card.setAttribute('role','button');card.setAttribute('tabindex','0');card.setAttribute('aria-label',label);const go=()=>scrollToPipeline(sortValue);card.addEventListener('click',go);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});});
 }
-function init(){injectUxStyles();setVisibleVersion();bindReleaseClose();installPullToRefresh();installMarketHandlers();installKpiDashboard();registerServiceWorker();showReleaseNotes(false);}
+function loadPipelineFix(){
+  if(document.querySelector('script[data-pipeline-fix]'))return;
+  const s=document.createElement('script');s.src='./pipeline.js?v='+LOCAL_VERSION;s.dataset.pipelineFix='1';document.body.appendChild(s);
+}
+function init(){injectUxStyles();setVisibleVersion();bindReleaseClose();installPullToRefresh();installMarketHandlers();installKpiDashboard();loadPipelineFix();registerServiceWorker();showReleaseNotes(false);}
 window.addEventListener('load',()=>{init();checkRemoteVersion();setInterval(checkRemoteVersion,5*60*1000);});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')checkRemoteVersion();});
 window.addEventListener('focus',checkRemoteVersion);
