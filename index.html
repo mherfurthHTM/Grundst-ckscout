@@ -2,149 +2,92 @@
 <html lang="de-CH">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#2647a3">
-  <meta name="description" content="STRUCTA Grundstücks-Scout – Grundstücke finden, erfassen und wirtschaftlich bewerten.">
+  <meta name="description" content="STRUCTA Grundstücks-Scout – Akquisition, Marktcheck und Wirtschaftlichkeitsprüfung.">
   <title>STRUCTA Grundstücks-Scout</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=0.7">
-  <link rel="stylesheet" href="search.css?v=0.7">
+  <link rel="stylesheet" href="styles.css?v=0.8">
+  <link rel="stylesheet" href="search.css?v=0.8">
+  <link rel="stylesheet" href="analysis.css?v=0.8">
 </head>
 <body>
-  <div id="updateStatus" class="update-status" hidden>Neue Version wird geladen …</div>
-
-  <div class="app-shell">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-symbol" aria-hidden="true"><span></span><span></span><span></span></div>
-        <div><strong>STRUCTA</strong><small>Grundstücks-Scout</small></div>
-      </div>
-      <nav class="nav">
-        <button class="nav-item active"><span>⌂</span>Dashboard</button>
-        <button class="nav-item"><span>⌕</span>Grundstücke</button>
-        <button class="nav-item"><span>◫</span>Wirtschaftlichkeit</button>
-        <button class="nav-item"><span>☆</span>Favoriten</button>
-      </nav>
-      <div class="sidebar-footer">
-        <div class="online"><i></i> <span id="appVersion">Beta 0.7</span></div>
-        <small>STRUCTA · Projektentwicklung</small>
-      </div>
-    </aside>
-
-    <main>
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">AKQUISITION · PROJEKTENTWICKLUNG</p>
-          <h1>Grundstücks-Scout</h1>
-          <p class="intro">Grundstücke breit suchen, vorprüfen und nach wirtschaftlichem Potenzial priorisieren.</p>
-        </div>
-        <div class="top-actions">
-          <button class="btn primary" id="addBtn">+ Grundstück erfassen</button>
-        </div>
-      </header>
-
-      <section class="hero">
-        <div>
-          <span class="badge">STRUCTA INVESTMENT RADAR · PILOTREGIONEN</span>
-          <h2>Gute Architektur beginnt mit einem guten Grundstück.</h2>
-          <p>Der Scout verbindet breite Akquise mit Wirtschaftlichkeit und Projektqualität.</p>
-        </div>
-        <div class="hero-score">
-          <span>Beste analysierte Opportunity</span>
-          <strong id="topScore">–</strong>
-          <small>von 100 Punkten</small>
-        </div>
-      </section>
-
-      <section class="panel filters">
-        <div class="panel-title">
-          <div><span class="kicker">SUCHPROFIL</span><h3>Wo und bis zu welchem Budget?</h3></div>
-          <button class="text-btn" id="resetBtn">Zurücksetzen</button>
-        </div>
-        <div class="filter-grid">
-          <label><span>Region</span><select id="regionFilter"><option value="all">Alle Pilotregionen</option><option>Basel-Stadt</option><option>Basel-Landschaft</option><option>Aargau</option><option>Solothurn</option></select></label>
-          <label><span>Kaufpreis-Budget</span><select id="budgetFilter"><option value="999">Kein Limit</option><option value="0.5">bis CHF 0.5 Mio.</option><option value="1">bis CHF 1 Mio.</option><option value="1.5">bis CHF 1.5 Mio.</option><option value="2">bis CHF 2 Mio.</option><option value="2.5">bis CHF 2.5 Mio.</option><option value="3">bis CHF 3 Mio.</option><option value="4">bis CHF 4 Mio.</option><option value="5">bis CHF 5 Mio.</option><option value="7.5">bis CHF 7.5 Mio.</option><option value="10">bis CHF 10 Mio.</option><option value="15">bis CHF 15 Mio.</option><option value="20">bis CHF 20 Mio.</option><option value="30">bis CHF 30 Mio.</option></select></label>
-          <label><span>Projektart</span><select id="strategyFilter"><option value="all">Alle Projektarten</option><option>Offen / Vorprüfung</option><option>Mehrfamilienhaus</option><option>Wohnüberbauung</option><option>Mischnutzung</option><option>Gewerbe</option></select></label>
-          <label><span>Mindestmarge</span><select id="marginFilter"><option value="0">Keine Mindestmarge</option><option value="5">ab 5 %</option><option value="10">ab 10 %</option><option value="15">ab 15 %</option><option value="20">ab 20 %</option><option value="25">ab 25 %</option></select></label>
-        </div>
-      </section>
-
-      <section id="searchCenter" class="panel search-center">
-        <div class="panel-title search-title">
-          <div>
-            <span class="kicker">AKQUISE-SUCHE</span>
-            <h3>Grundstückssuche</h3>
-            <p>Ein Suchlauf berücksichtigt immer Web, Facebook, Tutti, Comparis, ImmoScout24, Homegate, Newhome sowie Makler- und Projektentwicklerseiten.</p>
-          </div>
-          <span class="source-count">8 Suchbereiche</span>
-        </div>
-        <div class="search-query-row">
-          <label><span>Zusätzliche Suchbegriffe</span><input id="searchKeywords" value="Bauland Grundstück Entwicklungsobjekt Abbruchobjekt Baulandreserve" autocomplete="off"></label>
-          <button id="startSearchBtn" class="btn primary search-start" type="button">⌕ Suche starten</button>
-        </div>
-        <div id="searchStatus" class="search-status" hidden></div>
-        <div id="sourceGrid" class="source-grid"></div>
-        <div class="search-hint"><strong>Wichtig:</strong> Die App bleibt beim Start des Suchlaufs geöffnet. Externe Portale öffnen sich nur, wenn du einen Suchbereich bewusst auswählst.</div>
-      </section>
-
-      <section class="kpis">
-        <article><span>Gespeicherte Chancen</span><strong id="countKpi">0</strong><small>im aktuellen Filter</small></article>
-        <article><span>Ø Projektmarge</span><strong id="marginKpi">offen</strong><small>nur analysierte Projekte</small></article>
-        <article><span>Ø Gewinnpotenzial</span><strong id="profitKpi">offen</strong><small>nur analysierte Projekte</small></article>
-        <article class="blue"><span>Beste Bewertung</span><strong id="scoreKpi">–</strong><small>Opportunity Score</small></article>
-      </section>
-
-      <section class="workspace">
-        <div class="panel opportunities">
-          <div class="panel-title">
-            <div><span class="kicker">GESPEICHERTE OBJEKTE</span><h3>Grundstücke</h3></div>
-            <select id="sortFilter" class="sort"><option value="score">Score ↓</option><option value="margin">Marge ↓</option><option value="profit">Gewinn ↓</option><option value="price">Kaufpreis ↑</option></select>
-          </div>
-          <div id="list" class="list"></div>
-        </div>
-        <aside class="panel model">
-          <div class="panel-title"><div><span class="kicker">MODELL</span><h3>Opportunity Score</h3></div></div>
-          <div class="weights">
-            <div><p><strong>Wirtschaftlichkeit</strong><small>Marge und Gewinn</small></p><b>40 %</b></div>
-            <div><p><strong>Lage & Markt</strong><small>Standortqualität</small></p><b>25 %</b></div>
-            <div><p><strong>Baurecht & Potenzial</strong><small>Nutzbarkeit und Entwicklung</small></p><b>20 %</b></div>
-            <div><p><strong>Risiko</strong><small>Planungs- und Projektrisiko</small></p><b>15 %</b></div>
-          </div>
-          <div class="roadmap"><strong>Pilotbetrieb</strong><p>Basel-Stadt, Basel-Landschaft, Aargau und Solothurn. Suchtreffer können anschliessend als Opportunity erfasst und wirtschaftlich geprüft werden.</p></div>
-        </aside>
-      </section>
-    </main>
-  </div>
-
-  <dialog id="dialog">
-    <form id="form">
-      <div class="dialog-head"><div><span class="kicker">NEUE OPPORTUNITY</span><h3>Grundstück erfassen</h3></div><button type="button" id="closeBtn" class="close">×</button></div>
-      <div class="form-grid">
-        <label class="wide"><span>Bezeichnung / Adresse</span><input id="name" required placeholder="z. B. Hauptstrasse 18, Pratteln"></label>
-        <label><span>Region</span><select id="region"><option>Basel-Landschaft</option><option>Basel-Stadt</option><option>Aargau</option><option>Solothurn</option></select></label>
-        <label><span>Projektart</span><select id="strategy"><option>Mehrfamilienhaus</option><option>Wohnüberbauung</option><option>Mischnutzung</option><option>Gewerbe</option></select></label>
-        <label><span>Grundstück m²</span><input id="area" type="number" min="1" value="1200" required></label>
-        <label><span>Kaufpreis CHF</span><input id="price" type="number" min="1" step="1000" value="2200000" required></label>
-        <label><span>Baukosten CHF</span><input id="build" type="number" min="1" step="1000" value="5600000" required></label>
-        <label><span>Nebenkosten / Reserve CHF</span><input id="extra" type="number" min="0" step="1000" value="900000" required></label>
-        <label><span>Verkaufserlös CHF</span><input id="revenue" type="number" min="1" step="1000" value="10300000" required></label>
-        <label><span>Lagequalität</span><select id="location"><option value="95">Sehr stark</option><option value="82" selected>Stark</option><option value="68">Solide</option><option value="52">Durchschnittlich</option><option value="35">Schwach</option></select></label>
-        <label><span>Baurechtliches Potenzial</span><select id="planning"><option value="95">Sehr hoch</option><option value="82" selected>Hoch</option><option value="68">Solide</option><option value="52">Eingeschränkt</option><option value="35">Kritisch</option></select></label>
-        <label><span>Projektrisiko</span><select id="risk"><option value="90">Niedrig</option><option value="75" selected>Überschaubar</option><option value="58">Mittel</option><option value="40">Erhöht</option><option value="20">Hoch</option></select></label>
-      </div>
-      <div class="dialog-actions"><button type="button" id="cancelBtn" class="btn secondary">Abbrechen</button><button type="submit" class="btn primary">Berechnen & speichern</button></div>
-    </form>
-  </dialog>
-
-  <dialog id="patchDialog" class="patch-dialog">
-    <div class="patch-wrap">
-      <div class="patch-hero"><div class="patch-icon">✓</div><div><span class="kicker patch-kicker">NEUE VERSION</span><h3 id="patchTitle">Was ist neu?</h3><p id="patchDate"></p></div></div>
-      <div id="patchNotes" class="patch-notes"></div>
-      <div class="patch-footer"><small>Deine gespeicherten Grundstücke bleiben bei Updates erhalten.</small><button type="button" class="btn primary" id="patchCloseBtn">Verstanden</button></div>
+<div id="updateStatus" class="update-status" hidden>Neue Version wird geladen …</div>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div>
+      <div class="brand"><div class="brand-symbol"><span></span><span></span><span></span></div><div><strong>STRUCTA</strong><small>Grundstücks-Scout</small></div></div>
+      <nav class="nav"><button class="nav-item active"><span>⌂</span>Investment Radar</button><button class="nav-item"><span>⌕</span>Akquisition</button><button class="nav-item"><span>◫</span>Wirtschaftlichkeit</button><button class="nav-item"><span>☆</span>Favoriten</button></nav>
     </div>
-  </dialog>
+    <div class="sidebar-footer"><div class="online"><i></i><span id="appVersion">Beta 0.8</span></div><small>0 CHF laufende Softwarekosten · Privatpilot</small></div>
+  </aside>
+  <main>
+    <header class="topbar">
+      <div><p class="eyebrow">AKQUISITION · MARKT · PROJEKTENTWICKLUNG</p><h1>Grundstücks-Scout</h1><p class="intro">Chancen finden, Marktpotenzial einschätzen und Investitionsentscheide nachvollziehbar vorbereiten.</p></div>
+      <div class="top-actions"><button class="btn secondary" id="presentationBtn">Beispielanalyse</button><button class="btn primary" id="addBtn">+ Opportunity prüfen</button></div>
+    </header>
 
-  <script src="updater.js?v=0.7"></script>
-  <script src="app.js?v=0.7"></script>
-</body>
-</html>
+    <section class="hero">
+      <div><span class="badge">STRUCTA INVESTMENT RADAR · PILOTREGIONEN</span><h2>Vom Grundstück zum belastbaren Vorentscheid.</h2><p>Der Scout verbindet Akquise, Marktannahmen, Baupotenzial, Projektkosten, Erlös und Risiko in einem transparenten Investment-Check.</p></div>
+      <div class="hero-score"><span>Beste Opportunity</span><strong id="topScore">–</strong><small>von 100 Punkten</small></div>
+    </section>
+
+    <section class="panel filters">
+      <div class="panel-title"><div><span class="kicker">SUCHPROFIL</span><h3>Akquisitionskorridor</h3></div><button class="text-btn" id="resetBtn">Zurücksetzen</button></div>
+      <div class="filter-grid">
+        <label><span>Region</span><select id="regionFilter"><option value="all">Alle Pilotregionen</option><option>Basel-Stadt</option><option>Basel-Landschaft</option><option>Aargau</option><option>Solothurn</option></select></label>
+        <label><span>Kaufpreis-Budget</span><select id="budgetFilter"><option value="999">Kein Limit</option><option value="0.5">bis CHF 0.5 Mio.</option><option value="1">bis CHF 1 Mio.</option><option value="1.5">bis CHF 1.5 Mio.</option><option value="2">bis CHF 2 Mio.</option><option value="2.5">bis CHF 2.5 Mio.</option><option value="3">bis CHF 3 Mio.</option><option value="4">bis CHF 4 Mio.</option><option value="5">bis CHF 5 Mio.</option><option value="7.5">bis CHF 7.5 Mio.</option><option value="10">bis CHF 10 Mio.</option><option value="15">bis CHF 15 Mio.</option><option value="20">bis CHF 20 Mio.</option><option value="30">bis CHF 30 Mio.</option></select></label>
+        <label><span>Projektart</span><select id="strategyFilter"><option value="all">Alle Projektarten</option><option>Offen / Vorprüfung</option><option>Mehrfamilienhaus</option><option>Wohnüberbauung</option><option>Mischnutzung</option><option>Gewerbe</option></select></label>
+        <label><span>Mindestmarge</span><select id="marginFilter"><option value="0">Keine Mindestmarge</option><option value="8">ab 8 %</option><option value="12">ab 12 %</option><option value="15">ab 15 %</option><option value="20">ab 20 %</option></select></label>
+      </div>
+    </section>
+
+    <section id="searchCenter" class="panel search-center">
+      <div class="panel-title search-title"><div><span class="kicker">LIVE-AKQUISE</span><h3>Kostenloser Web-Scan</h3><p>Der Scout versucht öffentliche Treffer automatisch einzulesen. Falls eine Suchmaschine blockiert, bleiben die acht direkten Suchbereiche als kostenlose Fallbacks verfügbar.</p></div><span class="source-count">8+ Bereiche</span></div>
+      <div class="search-query-row"><label><span>Suchbegriffe</span><input id="searchKeywords" value="Bauland Grundstück Entwicklungsobjekt Abbruchobjekt Baulandreserve" autocomplete="off"></label><button id="startSearchBtn" class="btn primary search-start" type="button">⌕ Suche starten</button></div>
+      <div id="searchStatus" class="search-status" hidden></div>
+      <div id="liveResults" class="live-results"></div>
+      <details class="fallback"><summary>Direkte Suchbereiche öffnen</summary><div id="sourceGrid" class="source-grid"></div></details>
+    </section>
+
+    <section class="kpis">
+      <article><span>Geprüfte Chancen</span><strong id="countKpi">0</strong><small>im aktuellen Filter</small></article>
+      <article><span>Ø Projektmarge</span><strong id="marginKpi">offen</strong><small>analysierte Projekte</small></article>
+      <article><span>Ø Gewinnpotenzial</span><strong id="profitKpi">offen</strong><small>analysierte Projekte</small></article>
+      <article class="blue"><span>Beste Bewertung</span><strong id="scoreKpi">–</strong><small>Investment Score</small></article>
+    </section>
+
+    <section class="workspace">
+      <div class="panel opportunities"><div class="panel-title"><div><span class="kicker">INVESTMENT PIPELINE</span><h3>Geprüfte Opportunities</h3></div><select id="sortFilter" class="sort"><option value="score">Score ↓</option><option value="margin">Marge ↓</option><option value="profit">Gewinn ↓</option><option value="price">Kaufpreis ↑</option></select></div><div id="list" class="list"></div></div>
+      <aside class="panel model"><div class="panel-title"><div><span class="kicker">ENTSCHEIDUNGSMODELL</span><h3>Investment Score</h3></div></div><div class="weights"><div><p><strong>Wirtschaftlichkeit</strong><small>Marge, Gewinn, Residualwert</small></p><b>35 %</b></div><div><p><strong>Markt</strong><small>Puffer zum Break-even</small></p><b>25 %</b></div><div><p><strong>Baurecht</strong><small>Entwicklungspotenzial</small></p><b>15 %</b></div><div><p><strong>Architektur</strong><small>Qualitätspotenzial</small></p><b>10 %</b></div><div><p><strong>Risiko</strong><small>Planungs-/Projektrisiko</small></p><b>15 %</b></div></div><div class="roadmap"><strong>Entscheidungslogik</strong><p>KAUFEN = gute Marge, ausreichender Marktpuffer und Score ≥ 70. VERTIEFEN = Potenzial vorhanden, aber Annahmen müssen verifiziert werden. NICHT KAUFEN = Wirtschaftlichkeit oder Marktpuffer ungenügend.</p></div></aside>
+    </section>
+  </main>
+</div>
+
+<dialog id="dialog" class="analysis-dialog"><form id="form">
+  <div class="dialog-head"><div><span class="kicker">INVESTMENT CHECK</span><h3>Opportunity analysieren</h3></div><button type="button" id="closeBtn" class="close">×</button></div>
+  <div class="form-section"><h4>1 · Grundstück & Projekt</h4><div class="form-grid">
+    <label class="wide"><span>Bezeichnung / Adresse</span><input id="name" required placeholder="z. B. Hauptstrasse 18, Pratteln"></label>
+    <label><span>Region</span><select id="region"><option>Basel-Landschaft</option><option>Basel-Stadt</option><option>Aargau</option><option>Solothurn</option></select></label>
+    <label><span>Projektart</span><select id="strategy"><option>Mehrfamilienhaus</option><option>Wohnüberbauung</option><option>Mischnutzung</option><option>Gewerbe</option></select></label>
+    <label><span>Grundstück m²</span><input id="area" type="number" min="1" value="1200" required></label><label><span>Kaufpreis CHF</span><input id="price" type="number" min="0" step="1000" value="2200000" required></label>
+    <label><span>Bruttogeschossfläche m²</span><input id="gfa" type="number" min="1" value="1800" required></label><label><span>Verkaufbare Fläche m²</span><input id="sellable" type="number" min="1" value="1450" required></label>
+  </div></div>
+  <div class="form-section"><h4>2 · Markt- und Kostenannahmen</h4><p class="section-note">Diese Werte sind bewusst editierbare Annahmen und keine garantierten Marktwerte.</p><div class="form-grid">
+    <label><span>Marktannahme Verkauf CHF/m²</span><input id="saleM2" type="number" min="1" step="50" value="8200" required></label><label><span>Baukosten CHF/m² BGF</span><input id="buildM2" type="number" min="1" step="50" value="3600" required></label>
+    <label><span>Planung/Nebenkosten % Bau</span><input id="softPct" type="number" min="0" max="60" step="0.5" value="18" required></label><label><span>Reserve % Bau</span><input id="reservePct" type="number" min="0" max="40" step="0.5" value="7" required></label>
+    <label><span>Kaufnebenkosten % Land</span><input id="acqPct" type="number" min="0" max="20" step="0.5" value="3" required></label><label><span>Zielmarge auf Kosten %</span><input id="targetMargin" type="number" min="0" max="50" step="1" value="15" required></label>
+  </div></div>
+  <div class="form-section"><h4>3 · Qualitative Bewertung</h4><div class="form-grid four">
+    <label><span>Lage & Markt</span><select id="location"><option value="95">Sehr stark</option><option value="82" selected>Stark</option><option value="68">Solide</option><option value="52">Durchschnittlich</option><option value="35">Schwach</option></select></label>
+    <label><span>Baurecht</span><select id="planning"><option value="95">Sehr hoch</option><option value="82" selected>Hoch</option><option value="68">Solide</option><option value="52">Eingeschränkt</option><option value="35">Kritisch</option></select></label>
+    <label><span>Architekturpotenzial</span><select id="architecture"><option value="95">Aussergewöhnlich</option><option value="85" selected>Sehr gut</option><option value="70">Gut</option><option value="55">Durchschnittlich</option><option value="35">Eingeschränkt</option></select></label>
+    <label><span>Risiko</span><select id="risk"><option value="90">Niedrig</option><option value="75" selected>Überschaubar</option><option value="58">Mittel</option><option value="40">Erhöht</option><option value="20">Hoch</option></select></label>
+  </div></div>
+  <div id="previewCalc" class="preview-calc"></div>
+  <div class="dialog-actions"><button type="button" id="cancelBtn" class="btn secondary">Abbrechen</button><button type="submit" class="btn primary">Bewerten & speichern</button></div>
+</form></dialog>
+
+<dialog id="patchDialog" class="patch-dialog"><div class="patch-wrap"><div class="patch-hero"><div class="patch-icon">✓</div><div><span class="kicker patch-kicker">NEUE VERSION</span><h3 id="patchTitle">Was ist neu?</h3><p id="patchDate"></p></div></div><div id="patchNotes" class="patch-notes"></div><div class="patch-footer"><small>Gespeicherte Opportunities bleiben bei Updates erhalten.</small><button type="button" class="btn primary" id="patchCloseBtn">Verstanden</button></div></div></dialog>
+<script src="updater.js?v=0.8"></script><script src="app.js?v=0.8"></script>
+</body></html>
