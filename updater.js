@@ -1,15 +1,14 @@
-const LOCAL_VERSION='0.13';
-const RELEASE_ID='0.13-r1';
+const LOCAL_VERSION='0.14';
+const RELEASE_ID='0.14-r1';
 const RELEASE_NOTES={
-  title:'Beta 0.13 – Standortprüfung stabilisiert',
+  title:'Beta 0.14 – Management-Dashboard',
   date:'19.08.2026',
   notes:[
-    'Standortprüfung wurde robuster aufgebaut und zeigt jetzt zusätzlich die Datenqualität.',
-    'Fehlende Geodaten werden nicht mehr automatisch als schlechte Lage bewertet.',
-    'Adresssuche nutzt geo.admin.ch mit OpenStreetMap als Fallback.',
-    'ÖV wird zusätzlich über die Schweizer Transport API geprüft.',
-    'Für OSM-Umfelddaten stehen mehrere kostenlose Overpass-Server als Fallback bereit.',
-    'Ein Standort darf einen Deal erst bei ausreichender Datenqualität negativ zurückstufen.',
+    'Die vier Management-Kennzahlen sind auf dem Handy jetzt als kompakte 2×2-Übersicht angeordnet.',
+    'Geprüfte Chancen, Projektmarge, Gewinnpotenzial und beste Bewertung sind jetzt anklickbar.',
+    'Ein Tipp auf eine Kennzahl führt direkt zur Investment-Pipeline und sortiert bei Marge, Gewinn oder Score passend.',
+    'Die blaue Karte „Beste Bewertung“ bleibt als wichtigste Management-Kennzahl hervorgehoben.',
+    'Die stabilisierte Standortprüfung aus Beta 0.13 bleibt vollständig erhalten.',
     '0 CHF laufende Softwarekosten, sichtbare Version, Patchnotes und Pull-to-Refresh bleiben bestehen.'
   ]
 };
@@ -34,7 +33,8 @@ function injectUxStyles(){
   .verified-live-card{border-left:4px solid #2647a3}.verified-badge{display:inline-flex;background:#e9f8ef;color:#17683c;border-radius:999px;padding:4px 8px;font-size:10px;font-weight:900;margin-bottom:7px}
   .verified-address{font-size:12px;color:#667386;margin:0 0 8px}.verified-metrics{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0}.verified-metrics span{background:#f4f7fb;border-radius:8px;padding:7px 9px;font-size:11px}.verified-note{font-size:11px!important;color:#738096!important}
   .verified-live-card .live-meta{border-top:1px solid #edf0f4;padding-top:9px}.verified-source{font-weight:800;color:#405675}.market-actions{display:flex;gap:10px;align-items:center}.market-check-btn{padding:8px 11px;font-size:12px}
-  @media(max-width:640px){.top-actions{flex-wrap:wrap}.version-pill{width:100%;text-align:center;order:-1}.verified-metrics{display:grid;grid-template-columns:1fr 1fr}.verified-live-card .live-meta{align-items:flex-start;flex-direction:column}.market-actions{width:100%;justify-content:space-between}}
+  .kpis article.kpi-action{position:relative;cursor:pointer;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;border:1px solid transparent;user-select:none}.kpis article.kpi-action:after{content:'›';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:22px;font-weight:800;color:#a8b3c4}.kpis article.kpi-action.blue:after{color:#dce5ff}.kpis article.kpi-action:hover,.kpis article.kpi-action:focus{outline:none;transform:translateY(-1px);box-shadow:0 10px 26px rgba(30,55,90,.10);border-color:#dce5f3}.kpis article.kpi-action.blue:focus{border-color:#7f9ef3}.kpis article.kpi-action:active{transform:scale(.985)}
+  @media(max-width:640px){.top-actions{flex-wrap:wrap}.version-pill{width:100%;text-align:center;order:-1}.verified-metrics{display:grid;grid-template-columns:1fr 1fr}.verified-live-card .live-meta{align-items:flex-start;flex-direction:column}.market-actions{width:100%;justify-content:space-between}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}.kpis article{min-height:118px;padding:14px 13px!important;border-radius:14px!important;display:flex;flex-direction:column;justify-content:center}.kpis article span{font-size:12px;line-height:1.2;padding-right:14px}.kpis article strong{font-size:23px!important;line-height:1.05;margin:7px 0!important;word-break:break-word}.kpis article small{font-size:10px;line-height:1.25;padding-right:10px}.kpis article.kpi-action:after{right:8px;font-size:18px}}
   `;document.head.appendChild(st);
 }
 function setVisibleVersion(){
@@ -71,7 +71,12 @@ function installMarketHandlers(){
   const b=document.getElementById('startSearchBtn');if(b&&b.dataset.verifiedBound!=='1'){b.dataset.verifiedBound='1';b.addEventListener('click',runVerifiedMarketSearch,true);}
   const q=document.getElementById('searchKeywords');if(q&&q.dataset.verifiedBound!=='1'){q.dataset.verifiedBound='1';q.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.stopImmediatePropagation();runVerifiedMarketSearch();}},true);}
 }
-function init(){injectUxStyles();setVisibleVersion();bindReleaseClose();installPullToRefresh();installMarketHandlers();registerServiceWorker();showReleaseNotes(false);}
+function scrollToPipeline(sortValue=null){const sort=document.getElementById('sortFilter');if(sortValue&&sort){sort.value=sortValue;sort.dispatchEvent(new Event('change',{bubbles:true}));}const target=document.querySelector('.opportunities');if(target)setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),30);}
+function installKpiDashboard(){
+  const defs=[['countKpi',null,'Geprüfte Opportunities anzeigen'],['marginKpi','margin','Nach Projektmarge sortieren'],['profitKpi','profit','Nach Gewinnpotenzial sortieren'],['scoreKpi','score','Beste Bewertung anzeigen']];
+  defs.forEach(([id,sortValue,label])=>{const value=document.getElementById(id),card=value?.closest('article');if(!card||card.dataset.kpiBound==='1')return;card.dataset.kpiBound='1';card.classList.add('kpi-action');card.setAttribute('role','button');card.setAttribute('tabindex','0');card.setAttribute('aria-label',label);const go=()=>scrollToPipeline(sortValue);card.addEventListener('click',go);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});});
+}
+function init(){injectUxStyles();setVisibleVersion();bindReleaseClose();installPullToRefresh();installMarketHandlers();installKpiDashboard();registerServiceWorker();showReleaseNotes(false);}
 window.addEventListener('load',()=>{init();checkRemoteVersion();setInterval(checkRemoteVersion,5*60*1000);});
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')checkRemoteVersion();});
 window.addEventListener('focus',checkRemoteVersion);
