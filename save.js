@@ -1,4 +1,4 @@
-const SAVE_VERSION='0.19';
+const SAVE_VERSION='0.20';
 (function(){
   const STORAGE_KEY='structaScoutItems';
   const $=id=>document.getElementById(id);
@@ -75,11 +75,22 @@ const SAVE_VERSION='0.19';
     }
   }
 
+  function loadOerebModule(){
+    if(document.querySelector('script[data-oereb-module]'))return;
+    const script=document.createElement('script');
+    script.src='./oereb.js?v='+SAVE_VERSION;
+    script.dataset.oerebModule='1';
+    document.body.appendChild(script);
+  }
+
   function loadOfficialModule(){
-    if(document.querySelector('script[data-official-module]'))return;
+    const existing=document.querySelector('script[data-official-module]');
+    if(existing){loadOerebModule();return}
     const script=document.createElement('script');
     script.src='./official-data.js?v='+SAVE_VERSION;
     script.dataset.officialModule='1';
+    script.onload=loadOerebModule;
+    script.onerror=loadOerebModule;
     document.body.appendChild(script);
   }
 
