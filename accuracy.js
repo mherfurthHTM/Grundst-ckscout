@@ -1,0 +1,1 @@
+const ACCURACY_VERSION='0.18';
