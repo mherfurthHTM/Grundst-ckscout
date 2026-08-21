@@ -1,4 +1,4 @@
-const SAVE_VERSION='0.18';
+const SAVE_VERSION='0.19';
 (function(){
   const STORAGE_KEY='structaScoutItems';
   const $=id=>document.getElementById(id);
@@ -42,7 +42,6 @@ const SAVE_VERSION='0.18';
   function handleSave(event){
     event.preventDefault();
     event.stopImmediatePropagation();
-
     try{
       if(typeof formData!=='function')throw new Error('Formulardaten nicht verfügbar');
       const x=formData();
@@ -52,7 +51,6 @@ const SAVE_VERSION='0.18';
 
       const items=storageItems();
       const currentId=typeof editingId!=='undefined'?editingId:null;
-
       if(currentId){
         const idx=items.findIndex(i=>i.id===currentId);
         const existing=idx>=0?items[idx]:null;
@@ -77,11 +75,22 @@ const SAVE_VERSION='0.18';
     }
   }
 
-  function loadAccuracyModule(){
-    if(document.querySelector('script[data-accuracy-module]'))return;
+  function loadOfficialModule(){
+    if(document.querySelector('script[data-official-module]'))return;
+    const script=document.createElement('script');
+    script.src='./official-data.js?v='+SAVE_VERSION;
+    script.dataset.officialModule='1';
+    document.body.appendChild(script);
+  }
+
+  function loadEnhancementModules(){
+    const existing=document.querySelector('script[data-accuracy-module]');
+    if(existing){loadOfficialModule();return}
     const script=document.createElement('script');
     script.src='./accuracy.js?v='+SAVE_VERSION;
     script.dataset.accuracyModule='1';
+    script.onload=loadOfficialModule;
+    script.onerror=loadOfficialModule;
     document.body.appendChild(script);
   }
 
@@ -92,7 +101,7 @@ const SAVE_VERSION='0.18';
       form.dataset.cleanSaveBound='1';
       form.addEventListener('submit',handleSave,true);
     }
-    loadAccuracyModule();
+    loadEnhancementModules();
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();
