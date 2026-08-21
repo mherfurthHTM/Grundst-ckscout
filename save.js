@@ -27,6 +27,18 @@ const SAVE_VERSION='0.17.2';
     if(check.length!==items.length)throw new Error('Speicherprüfung fehlgeschlagen');
   }
 
+  function missingMessage(x){
+    const missing=[];
+    if(!x.name)missing.push('Bezeichnung/Adresse');
+    if(!x.area)missing.push('Grundstücksfläche');
+    if(x.price==null||Number.isNaN(Number(x.price)))missing.push('Kaufpreis');
+    if(!x.gfa)missing.push('BGF');
+    if(!x.sellable)missing.push('verkaufbare Fläche');
+    if(!x.saleM2)missing.push('Marktannahme');
+    if(!x.buildM2)missing.push('Baukosten');
+    return missing.length?'Fehlt: '+missing.join(', '):'';
+  }
+
   function handleSave(event){
     event.preventDefault();
     event.stopImmediatePropagation();
@@ -34,9 +46,9 @@ const SAVE_VERSION='0.17.2';
     try{
       if(typeof formData!=='function')throw new Error('Formulardaten nicht verfügbar');
       const x=formData();
-      if(!x.name){showSaveMessage('Bitte Bezeichnung oder Adresse eingeben.',true);return}
+      const missing=missingMessage(x);
+      if(missing){showSaveMessage(missing,true);return}
       if(typeof PILOT_REGIONS!=='undefined'&&!PILOT_REGIONS.includes(x.region)){showSaveMessage('Region ist nicht im Pilotgebiet.',true);return}
-      if(!x.gfa||!x.sellable||!x.saleM2||!x.buildM2){showSaveMessage('BGF, verkaufbare Fläche, Marktannahme und Baukosten prüfen.',true);return}
 
       const items=storageItems();
       const currentId=typeof editingId!=='undefined'?editingId:null;
@@ -68,6 +80,7 @@ const SAVE_VERSION='0.17.2';
   function install(){
     const form=$('form');
     if(!form||form.dataset.cleanSaveBound==='1')return;
+    form.noValidate=true;
     form.dataset.cleanSaveBound='1';
     form.addEventListener('submit',handleSave,true);
   }
