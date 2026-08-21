@@ -1,6 +1,7 @@
 const SWISS_CANTONS_VERSION='0.20.1';
 (function(){
   const CANTONS=['Aargau','Appenzell Ausserrhoden','Appenzell Innerrhoden','Basel-Landschaft','Basel-Stadt','Bern','Freiburg','Genf','Glarus','Graubünden','Jura','Luzern','Neuenburg','Nidwalden','Obwalden','Schaffhausen','Schwyz','Solothurn','St. Gallen','Tessin','Thurgau','Uri','Waadt','Wallis','Zug','Zürich'];
+  const VERIFIED_MARKET_REGIONS=new Set(['Aargau','Basel-Landschaft','Basel-Stadt','Solothurn']);
   window.STRUCTA_CANTONS=CANTONS;
 
   function fillSelect(id,allOption=false){
@@ -34,6 +35,19 @@ const SWISS_CANTONS_VERSION='0.20.1';
     };
   }
 
+  function installNationalSearch(){
+    const button=document.getElementById('startSearchBtn');if(!button||button.dataset.allCantonsBound==='1')return;
+    button.dataset.allCantonsBound='1';
+    button.addEventListener('click',e=>{
+      const region=document.getElementById('regionFilter')?.value||'all';
+      if(region!=='all'&&VERIFIED_MARKET_REGIONS.has(region))return;
+      e.preventDefault();e.stopImmediatePropagation();
+      if(typeof buildFallbacks==='function')buildFallbacks();
+      const details=document.querySelector('#searchCenter details.fallback');if(details)details.open=true;
+      const status=document.getElementById('searchStatus');if(status){status.hidden=false;status.innerHTML=region==='all'?'<strong>Schweiz-weite Suche ist bereit.</strong> Die direkten Suchbereiche durchsuchen die ganze Schweiz.':'<strong>Suche für '+region+' ist bereit.</strong> Für diesen Kanton werden die direkten Schweizer Immobilienquellen verwendet.';}
+    },true);
+  }
+
   if(typeof render==='function'){
     render=function(){
       let items=state.items.map(calculate);
@@ -51,6 +65,6 @@ const SWISS_CANTONS_VERSION='0.20.1';
     };
   }
 
-  function init(){installCantons();if(typeof buildFallbacks==='function')buildFallbacks();if(typeof render==='function')render();}
+  function init(){installCantons();installNationalSearch();if(typeof buildFallbacks==='function')buildFallbacks();if(typeof render==='function')render();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
