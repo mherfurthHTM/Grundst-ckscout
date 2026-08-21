@@ -150,6 +150,17 @@ const OEREB_VERSION='0.20';
     }
   }
 
+  function wrapOfficialCheck(){
+    if(typeof runOfficialCheck!=='function'||runOfficialCheck.__oereb20)return;
+    const base=runOfficialCheck;
+    const wrapped=async function(...args){
+      const official=await base(...args);
+      if(official)await run(official);
+      return official;
+    };
+    wrapped.__oereb20=true;runOfficialCheck=wrapped;
+  }
+
   function wrapExisting(){
     if(typeof populateExisting!=='function'||populateExisting.__oereb20)return;
     const base=populateExisting;
@@ -176,8 +187,7 @@ const OEREB_VERSION='0.20';
   }
 
   function install(){
-    injectStyles();ensureBox();wrapExisting();wrapQuality();setVersion();
-    window.addEventListener('structa:official-data',e=>run(e.detail));
+    injectStyles();ensureBox();wrapOfficialCheck();wrapExisting();wrapQuality();setVersion();
     if(typeof currentLocationAnalysis!=='undefined'&&currentLocationAnalysis?.oerebData)render(currentLocationAnalysis.oerebData);
   }
 
