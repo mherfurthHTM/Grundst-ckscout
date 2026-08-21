@@ -1,4 +1,4 @@
-const SAVE_VERSION='0.20';
+const SAVE_VERSION='0.20.1';
 (function(){
   const STORAGE_KEY='structaScoutItems';
   const $=id=>document.getElementById(id);
@@ -15,10 +15,7 @@ const SAVE_VERSION='0.20';
   }
 
   function storageItems(){
-    try{
-      const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
-      return Array.isArray(value)?value:[];
-    }catch{return []}
+    try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(value)?value:[]}catch{return []}
   }
 
   function persist(items){
@@ -47,7 +44,8 @@ const SAVE_VERSION='0.20';
       const x=formData();
       const missing=missingMessage(x);
       if(missing){showSaveMessage(missing,true);return}
-      if(typeof PILOT_REGIONS!=='undefined'&&!PILOT_REGIONS.includes(x.region)){showSaveMessage('Region ist nicht im Pilotgebiet.',true);return}
+      const cantons=Array.isArray(window.STRUCTA_CANTONS)?window.STRUCTA_CANTONS:null;
+      if(cantons&&!cantons.includes(x.region)){showSaveMessage('Bitte einen Schweizer Kanton auswählen.',true);return}
 
       const items=storageItems();
       const currentId=typeof editingId!=='undefined'?editingId:null;
@@ -105,6 +103,16 @@ const SAVE_VERSION='0.20';
     document.body.appendChild(script);
   }
 
+  function loadCantonModule(){
+    if(document.querySelector('script[data-canton-module]')){loadEnhancementModules();return}
+    const script=document.createElement('script');
+    script.src='./swiss-cantons.js?v='+SAVE_VERSION;
+    script.dataset.cantonModule='1';
+    script.onload=loadEnhancementModules;
+    script.onerror=loadEnhancementModules;
+    document.body.appendChild(script);
+  }
+
   function install(){
     const form=$('form');
     if(form&&form.dataset.cleanSaveBound!=='1'){
@@ -112,7 +120,7 @@ const SAVE_VERSION='0.20';
       form.dataset.cleanSaveBound='1';
       form.addEventListener('submit',handleSave,true);
     }
-    loadEnhancementModules();
+    loadCantonModule();
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();
