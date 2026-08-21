@@ -1,4 +1,4 @@
-const SAVE_VERSION='0.17.2';
+const SAVE_VERSION='0.18';
 (function(){
   const STORAGE_KEY='structaScoutItems';
   const $=id=>document.getElementById(id);
@@ -77,12 +77,22 @@ const SAVE_VERSION='0.17.2';
     }
   }
 
+  function loadAccuracyModule(){
+    if(document.querySelector('script[data-accuracy-module]'))return;
+    const script=document.createElement('script');
+    script.src='./accuracy.js?v='+SAVE_VERSION;
+    script.dataset.accuracyModule='1';
+    document.body.appendChild(script);
+  }
+
   function install(){
     const form=$('form');
-    if(!form||form.dataset.cleanSaveBound==='1')return;
-    form.noValidate=true;
-    form.dataset.cleanSaveBound='1';
-    form.addEventListener('submit',handleSave,true);
+    if(form&&form.dataset.cleanSaveBound!=='1'){
+      form.noValidate=true;
+      form.dataset.cleanSaveBound='1';
+      form.addEventListener('submit',handleSave,true);
+    }
+    loadAccuracyModule();
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install,{once:true});else install();
